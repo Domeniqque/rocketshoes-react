@@ -22,5 +22,6 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
     'react/state-in-constructor': 'off',
     'import/prefer-default-export': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
   },
 };
