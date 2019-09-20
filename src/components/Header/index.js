@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdShoppingBasket } from 'react-icons/md';
+import PropType from 'prop-types';
 
 import { Container, Cart } from './styles';
 import header from '../../assets/images/logo.svg';
 
-export default function Header() {
+function Header({ cartSize }) {
   return (
     <Container>
       <Link to="/">
@@ -15,7 +17,7 @@ export default function Header() {
       <Cart to="/cart">
         <div>
           <strong>Meu carrinho</strong>
-          <span>3 itens</span>
+          <span>{cartSize} itens</span>
         </div>
 
         <MdShoppingBasket size={36} color="#fff" />
@@ -23,3 +25,11 @@ export default function Header() {
     </Container>
   );
 }
+
+Header.propTypes = {
+  cartSize: PropType.number.isRequired,
+};
+
+export default connect(state => ({
+  cartSize: state.cart.length,
+}))(Header);
