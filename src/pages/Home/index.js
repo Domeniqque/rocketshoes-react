@@ -1,130 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+import api from '../../services/api';
+import { formatPrice } from '../../utils/index';
 
 import { ProducList } from './styles';
 
-export default function Home() {
-  return (
-    <ProducList>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
 
-        <strong>Tênis muito legal Lorem</strong>
-        <span>R$129,90</span>
+  async componentDidMount() {
+    const response = await api.get('products');
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
+    const products = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
+    this.setState({ products });
+  }
 
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
+  render() {
+    const { products } = this.state;
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
+    return (
+      <ProducList>
+        {products.map(product => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
 
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
 
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
+            <button type="button">
+              <div>
+                <MdAddShoppingCart size={16} color="#fff" /> 3
+              </div>
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
-
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
-
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
-
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-      <li>
-        <img
-          src="https://static.netshoes.com.br/produtos/tenis-adidas-duramo-lite-2-0-masculino/28/COL-3586-128/COL-3586-128_detalhe2.jpg?ims=326x"
-          alt="Tenis"
-        />
-
-        <strong>Tênis muito legal</strong>
-        <span>R$129,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart size={16} color="#fff" /> 3
-          </div>
-
-          <span>ADICIONAR AO CARRINHO</span>
-        </button>
-      </li>
-    </ProducList>
-  );
+              <span>ADICIONAR AO CARRINHO</span>
+            </button>
+          </li>
+        ))}
+      </ProducList>
+    );
+  }
 }
