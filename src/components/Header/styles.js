@@ -14,6 +14,10 @@ export const Cart = styled(Link)`
   text-decoration: none;
   transition: opacity 200ms;
 
+  img {
+    cursor: pointer;
+  }
+
   &:hover {
     opacity: 0.7;
   }
